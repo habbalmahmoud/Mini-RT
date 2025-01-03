@@ -1,6 +1,10 @@
 #include "../includes/miniRT.h"
 
-int main(void)
+int main(int ac, char **av)
 {
-    printf("Hello World\n");
+    if (ac != 2)
+        printf("Error\nOnly 2 arguments required\n");
+    else
+        minirt(av);
+    return (0);
 }
