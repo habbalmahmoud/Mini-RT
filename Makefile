@@ -37,7 +37,6 @@ $(GNL) :
 
 clean :	
 		@make clean -C ./Libft
-		@make clean -C ./Printf
 		@make clean -C ./GNL
 		${RM} ${OBJS}
 
