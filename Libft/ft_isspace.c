@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakra <kakra@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 12:56:01 by mhabbal           #+#    #+#             */
-/*   Updated: 2025/01/04 18:48:33 by marvin           ###   ########.fr       */
+/*   Created: 2024/08/29 22:14:40 by kakra             #+#    #+#             */
+/*   Updated: 2024/08/29 22:16:54 by kakra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int C)
+#include "libft.h"
+
+bool	ft_isspace(char input)
 {
-	if (C >= '0' && C <= '9')
-	{
-		return (1);
-	}
-	return (0);
+	if (input == ' ' || (input >= 9 && input <= 13))
+		return (true);
+	return (false);
 }

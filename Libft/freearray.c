@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   freearray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kakra <kakra@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 12:56:01 by mhabbal           #+#    #+#             */
-/*   Updated: 2025/01/04 18:48:33 by marvin           ###   ########.fr       */
+/*   Created: 2024/08/24 21:15:57 by kakra             #+#    #+#             */
+/*   Updated: 2024/08/24 21:17:48 by kakra            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int C)
+#include <stdlib.h>
+
+void	freearray(char **str)
 {
-	if (C >= '0' && C <= '9')
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		return (1);
+		free(str[i]);
+		i++;
 	}
-	return (0);
+	free(str);
 }

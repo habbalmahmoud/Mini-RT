@@ -1,4 +1,4 @@
-SRCS = main.c check_the_map.c minirt.c
+SRCS = main.c  check_the_map.c minirt.c validation.c
 
 SRCS_DIR = $(addprefix srcs/, $(SRCS))
 
