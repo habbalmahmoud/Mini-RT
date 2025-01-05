@@ -231,6 +231,159 @@ int check_cor_c(char **line , t_cor *cor)
 	return (0);
 }
 
+int check_cor_l(char **line, t_cor *cor)
+{
+    char **xyz;
+
+	if (twodsize(line) != 3)
+	{
+		printf("Error\nLight only Takes 2 arguments\n");
+		return (1);
+	}
+	xyz = ft_split(line[1], ',');
+	if (twodsize(xyz) != 3)
+	{
+		printf("Error\nLight Point Coordinates Only Takes 3 Numbers\n");
+		freearray(xyz);
+		return (1);
+	}
+	if (is_all_digits(line[2]) == 0 || is_all_digits(line[2]) == 3)
+	{
+		printf("Error\nLight Brightness Raito Should be a Number\n");
+		freearray(xyz);
+		return (1);
+	}
+	if (is_all_digits(xyz[0]) == 0 || is_all_digits(xyz[1]) == 0 || is_all_digits(xyz[2]) == 0 || is_all_digits(xyz[0]) == 3 || is_all_digits(xyz[1]) == 3 || is_all_digits(xyz[2]) == 3)
+	{
+		printf("Error\nLight Point Coordinates Should be a Number\n");
+		freearray(xyz);
+		return (1);
+	}
+	cor->light.cor[0] = string_to_float(xyz[0]);
+	cor->light.cor[1] = string_to_float(xyz[1]);
+	cor->light.cor[2] = string_to_float(xyz[2]);
+    cor->light.brightness = string_to_float(line[2]);
+    if (cor->light.brightness > 1 || cor->light.brightness < 0)
+	{
+		printf("Error\nLight Brightness Range Is Between 0 -> 1\n");
+		freearray(xyz);
+		return (1);
+	}
+	freearray(xyz);
+	return (0);
+}
+
+int check_cor_cy(char **line, t_cor *cor)
+{
+    char **xyz;
+    char **vector;
+    char **rgb;
+
+	if (twodsize(line) != 6)
+	{
+		printf("Error\nCylinder only Takes 5 arguments\n");
+		return (1);
+	}
+	xyz = ft_split(line[1], ',');
+    rgb = ft_split(line[5], ',');
+	vector = ft_split(line[2], ',');
+    if (twodsize(rgb) != 3)
+	{
+		printf("Error\nCylinder RGB Only Takes 3 Numbers\n");
+		freearray(rgb);
+        freearray(xyz);
+		freearray(vector);
+		return (1);
+	}
+    if (is_all_digits(rgb[0]) == 0 || is_all_digits(rgb[1]) == 0 || is_all_digits(rgb[2]) == 0 || is_all_digits(rgb[0]) == 3 || is_all_digits(rgb[1]) == 3 || is_all_digits(rgb[2]) == 3)
+	{
+		printf("Error\nCylinder RGB Should be a Number\n");
+		freearray(rgb);
+        freearray(xyz);
+		freearray(vector);
+		return (1);
+	}
+	if (twodsize(xyz) != 3)
+	{
+		printf("Error\nCoordinates Of The Center Of The Cylinder Only Takes 3 Numbers\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+    if (twodsize(vector) != 3)
+	{
+		printf("Error\n3D Normalized Vector Of Axis Of Cylinder Only Takes 3 Numbers\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+	if (is_all_digits(line[3]) == 0 || is_all_digits(line[3]) == 3)
+	{
+		printf("Error\nCylinder Diameter Should be a Number\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+    if (is_all_digits(line[4]) == 0 || is_all_digits(line[4]) == 3)
+	{
+		printf("Error\nCylinder Height Should be a Number\n");
+		freearray(xyz);
+        freearray(rgb);
+		freearray(vector);
+		return (1);
+	}
+	if (is_all_digits(xyz[0]) == 0 || is_all_digits(xyz[1]) == 0 || is_all_digits(xyz[2]) == 0 || is_all_digits(xyz[0]) == 3 || is_all_digits(xyz[1]) == 3 || is_all_digits(xyz[2]) == 3)
+	{
+		printf("Error\nCoordinates Of The Center Of The Cylinder Should be a Number\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+    if (is_all_digits(vector[0]) == 0 || is_all_digits(vector[1]) == 0 || is_all_digits(vector[2]) == 0 || is_all_digits(vector[0]) == 3 || is_all_digits(vector[1]) == 3 || is_all_digits(vector[2]) == 3)
+	{
+		printf("Error\3D Normalized Vector Of Axis Of Cylinder Should be a Number\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+	cor->cy.cor[0] = string_to_float(xyz[0]); 
+	cor->cy.cor[1] = string_to_float(xyz[1]); 
+	cor->cy.cor[2] = string_to_float(xyz[2]); 
+    cor->cy.vector[0] = string_to_float(vector[0]);
+    cor->cy.vector[1] = string_to_float(vector[1]);
+    cor->cy.vector[2] = string_to_float(vector[2]);
+    cor->cy.cy_diameter = string_to_float(line[3]);
+    cor->cy.cy_height = string_to_float(line[4]);
+    cor->cy.rgb[0] = string_to_float(rgb[0]);
+    cor->cy.rgb[1] = string_to_float(rgb[1]);
+    cor->cy.rgb[2] = string_to_float(rgb[2]);
+    if ((cor->cy.rgb[0] > 255 || cor->cy.rgb[0] < 0) || (cor->cy.rgb[1] > 255 || cor->cy.rgb[1] < 0) || (cor->cy.rgb[2] > 255 || cor->cy.rgb[2] < 0))
+	{
+		printf("Error\nCylinder RGB Range Is Between 0-255\n");
+		freearray(rgb);
+        freearray(xyz);
+		freearray(vector);
+		return (1);
+	}
+    if ((cor->cy.vector[0] > 1 || cor->cy.vector[0] < -1) || (cor->cy.vector[1] > 1 || cor->cy.vector[1] < -1) || (cor->cy.vector[2] > 1 || cor->cy.vector[2] < -1))
+	{
+		printf("Error\nCylinder 3D Normalized Vector Of Axis Range Is Between -1 -> 1\n");
+		freearray(xyz);
+		freearray(vector);
+		freearray(rgb);
+		return (1);
+	}
+	freearray(xyz);
+    freearray(rgb);
+    freearray(vector);
+	return (0);
+}
+
 int	check_cor(char **line, t_cor *cor)
 {
 	if (line[0][0] == 'A')
@@ -238,6 +391,14 @@ int	check_cor(char **line, t_cor *cor)
     else if (line[0][0] == 'C')
     {
         check_cor_c(line, cor);
+    }
+    else if (line[0][0] == 'L')
+    {
+        check_cor_l(line, cor);
+    }
+    else if (line[0][0] == 'c')
+    {
+        check_cor_cy(line, cor);
     }
 	return (0);
 }

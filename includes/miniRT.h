@@ -16,7 +16,6 @@ typedef struct s_light
 {
     float			cor[3];
 	float			brightness;
-	float			rgb[3];
 }				t_light;
 
 typedef struct s_am
