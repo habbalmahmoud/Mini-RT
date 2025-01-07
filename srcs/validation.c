@@ -384,6 +384,147 @@ int check_cor_cy(char **line, t_cor *cor)
 	return (0);
 }
 
+int	check_cor_pl(char **line, t_cor *cor)
+{
+	char **xyz;
+    char **vector;
+    char **rgb;
+
+	if (twodsize(line) != 4)
+	{
+		printf("Error\nPlane only Takes 4 arguments\n");
+		return (1);
+	}
+	xyz = ft_split(line[1], ',');
+    rgb = ft_split(line[3], ',');
+	vector = ft_split(line[2], ',');
+	 if (twodsize(rgb) != 3)
+	{
+		printf("Error\nPlane RGB Only Takes 3 Numbers\n");
+		freearray(rgb);
+        freearray(xyz);
+		freearray(vector);
+		return (1);
+	}
+    if (is_all_digits(rgb[0]) == 0 || is_all_digits(rgb[1]) == 0 || is_all_digits(rgb[2]) == 0 || is_all_digits(rgb[0]) == 3 || is_all_digits(rgb[1]) == 3 || is_all_digits(rgb[2]) == 3)
+	{
+		printf("Error\nPlane RGB Should be a Number\n");
+		freearray(rgb);
+        freearray(xyz);
+		freearray(vector);
+		return (1);
+	}
+	if (twodsize(xyz) != 3)
+	{
+		printf("Error\nCoordinates Of The Center Of The Plane Only Takes 3 Numbers\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+    if (twodsize(vector) != 3)
+	{
+		printf("Error\n3D Normalized Vector Of Axis Of Cylinder Only Takes 3 Numbers\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+	if (is_all_digits(xyz[0]) == 0 || is_all_digits(xyz[1]) == 0 || is_all_digits(xyz[2]) == 0 || is_all_digits(xyz[0]) == 3 || is_all_digits(xyz[1]) == 3 || is_all_digits(xyz[2]) == 3)
+	{
+		printf("Error\nCoordinates Of The Center Of The Cylinder Should be a Number\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+    if (is_all_digits(vector[0]) == 0 || is_all_digits(vector[1]) == 0 || is_all_digits(vector[2]) == 0 || is_all_digits(vector[0]) == 3 || is_all_digits(vector[1]) == 3 || is_all_digits(vector[2]) == 3)
+	{
+		printf("Error\3D Normalized Vector Of Axis Of Cylinder Should be a Number\n");
+		freearray(xyz);
+		freearray(vector);
+        freearray(rgb);
+		return (1);
+	}
+	cor->pl.cor[0] = string_to_float(xyz[0]); 
+	cor->pl.cor[1] = string_to_float(xyz[1]); 
+	cor->pl.cor[2] = string_to_float(xyz[2]); 
+    cor->pl.vector[0] = string_to_float(vector[0]);
+    cor->pl.vector[1] = string_to_float(vector[1]);
+    cor->pl.vector[2] = string_to_float(vector[2]);
+	cor->pl.rgb[0] = string_to_float(rgb[0]);
+    cor->pl.rgb[1] = string_to_float(rgb[1]);
+    cor->pl.rgb[2] = string_to_float(rgb[2]);
+	 if ((cor->pl.rgb[0] > 255 || cor->pl.rgb[0] < 0) || (cor->pl.rgb[1] > 255 || cor->pl.rgb[1] < 0) || (cor->pl.rgb[2] > 255 || cor->pl.rgb[2] < 0))
+	{
+		printf("Error\nPlane RGB Range Is Between 0-255\n");
+		freearray(rgb);
+        freearray(xyz);
+		freearray(vector);
+		return (1);
+	}
+    if ((cor->pl.vector[0] > 1 || cor->pl.vector[0] < -1) || (cor->pl.vector[1] > 1 || cor->pl.vector[1] < -1) || (cor->pl.vector[2] > 1 || cor->pl.vector[2] < -1))
+	{
+		printf("Error\nPlane 3D Normalized Vector Of Axis Range Is Between -1 -> 1\n");
+		freearray(xyz);
+		freearray(vector);
+		freearray(rgb);
+		return (1);
+	}
+	freearray(xyz);
+    freearray(rgb);
+    freearray(vector);
+	return (0);
+}
+
+int	check_cor_sp(char **line, t_cor *cor)
+{
+	char **xyz;
+    char **rgb;
+
+	if (twodsize(line) != 4)
+	{
+		printf("Error\Sphere only Takes 4 arguments\n");
+		return (1);
+	}
+	xyz = ft_split(line[1], ',');
+    rgb = ft_split(line[3], ',');
+	 if (twodsize(rgb) != 3)
+	{
+		printf("Error\nSphere RGB Only Takes 3 Numbers\n");
+		freearray(rgb);
+        freearray(xyz);
+		return (1);
+	}
+    if (is_all_digits(rgb[0]) == 0 || is_all_digits(rgb[1]) == 0 || is_all_digits(rgb[2]) == 0 || is_all_digits(rgb[0]) == 3 || is_all_digits(rgb[1]) == 3 || is_all_digits(rgb[2]) == 3)
+	{
+		printf("Error\nPlane RGB Should be a Number\n");
+		freearray(rgb);
+        freearray(xyz);
+		return (1);
+	}
+	if (twodsize(xyz) != 3)
+	{
+		printf("Error\nCoordinates Of The Center Of The Plane Only Takes 3 Numbers\n");
+		freearray(xyz);
+        freearray(rgb);
+		return (1);
+	}
+	if (is_all_digits(xyz[0]) == 0 || is_all_digits(xyz[1]) == 0 || is_all_digits(xyz[2]) == 0 || is_all_digits(xyz[0]) == 3 || is_all_digits(xyz[1]) == 3 || is_all_digits(xyz[2]) == 3)
+	{
+		printf("Error\nCoordinates Of The Center Of The Cylinder Should be a Number\n");
+		freearray(xyz);
+        freearray(rgb);
+		return (1);
+	}
+	cor->sp.cor[0] = string_to_float(xyz[0]); 
+	cor->sp.cor[1] = string_to_float(xyz[1]); 
+	cor->sp.cor[2] = string_to_float(xyz[2]);
+	cor->sp.rgb[0] = string_to_float(rgb[0]);
+    cor->sp.rgb[1] = string_to_float(rgb[1]);
+    cor->sp.rgb[2] = string_to_float(rgb[2]);
+}
+
 int	check_cor(char **line, t_cor *cor)
 {
 	if (line[0][0] == 'A')
@@ -399,6 +540,14 @@ int	check_cor(char **line, t_cor *cor)
     else if (line[0][0] == 'c')
     {
         check_cor_cy(line, cor);
+    }
+	else if (line[0][0] == 'p')
+    {
+        check_cor_pl(line, cor);
+    }
+	else if (line[0][0] == 's')
+    {
+        check_cor_sp(line, cor);
     }
 	return (0);
 }
