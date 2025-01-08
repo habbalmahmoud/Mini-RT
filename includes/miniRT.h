@@ -12,6 +12,13 @@
 #include <unistd.h>
 #include <math.h>
 
+typedef struct s_mlbx
+{
+	void	*mlx;
+	void	*mlx_win;
+	// t_img	img;
+}			t_mlbx;
+
 typedef struct s_light
 {
     float			cor[3];

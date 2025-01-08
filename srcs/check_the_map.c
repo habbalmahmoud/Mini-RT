@@ -53,13 +53,17 @@ char **checking_the_map(char *str)
     if (ft_strncmp(substr, ".rt", 3) != 0)
     {
         free(substr);
-        exit(printf("Error\nWrong Extension\n"));
+        printf("Error\nWrong Extension\n");
+        return (NULL);
     }
     free(substr);
     fd = open(str, O_RDONLY);
     fd_cpy = open(str, O_RDONLY);
     if (fd < 0 || fd_cpy < 0)
-        exit(printf("Error reading the file!\n"));
+    {
+        printf("Error reading the file!\n");
+        return (NULL);
+    }
     map = malloc((count_lines(fd_cpy) + 1) * sizeof(char *));
     if (!map)
         return (NULL);

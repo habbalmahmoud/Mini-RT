@@ -362,6 +362,20 @@ int check_cor_cy(char **line, t_cor *cor)
     cor->cy.rgb[0] = string_to_float(rgb[0]);
     cor->cy.rgb[1] = string_to_float(rgb[1]);
     cor->cy.rgb[2] = string_to_float(rgb[2]);
+		if (cor->cy.cy_diameter < 0)
+	{
+		printf("Error\nCylinder Diameter Should be a Positive Number\n");
+		freearray(xyz);
+        freearray(rgb);
+		return (1);
+	}
+	if (cor->cy.cy_height < 0)
+	{
+		printf("Error\nCylinder height Should be a Positive Number\n");
+		freearray(xyz);
+        freearray(rgb);
+		return (1);
+	}
     if ((cor->cy.rgb[0] > 255 || cor->cy.rgb[0] < 0) || (cor->cy.rgb[1] > 255 || cor->cy.rgb[1] < 0) || (cor->cy.rgb[2] > 255 || cor->cy.rgb[2] < 0))
 	{
 		printf("Error\nCylinder RGB Range Is Between 0-255\n");
@@ -424,7 +438,7 @@ int	check_cor_pl(char **line, t_cor *cor)
 	}
     if (twodsize(vector) != 3)
 	{
-		printf("Error\n3D Normalized Vector Of Axis Of Cylinder Only Takes 3 Numbers\n");
+		printf("Error\n3D Normalized Vector Of Axis Of Plane Only Takes 3 Numbers\n");
 		freearray(xyz);
 		freearray(vector);
         freearray(rgb);
@@ -432,7 +446,7 @@ int	check_cor_pl(char **line, t_cor *cor)
 	}
 	if (is_all_digits(xyz[0]) == 0 || is_all_digits(xyz[1]) == 0 || is_all_digits(xyz[2]) == 0 || is_all_digits(xyz[0]) == 3 || is_all_digits(xyz[1]) == 3 || is_all_digits(xyz[2]) == 3)
 	{
-		printf("Error\nCoordinates Of The Center Of The Cylinder Should be a Number\n");
+		printf("Error\nCoordinates Of The Center Of The Plane Should be a Number\n");
 		freearray(xyz);
 		freearray(vector);
         freearray(rgb);
@@ -440,7 +454,7 @@ int	check_cor_pl(char **line, t_cor *cor)
 	}
     if (is_all_digits(vector[0]) == 0 || is_all_digits(vector[1]) == 0 || is_all_digits(vector[2]) == 0 || is_all_digits(vector[0]) == 3 || is_all_digits(vector[1]) == 3 || is_all_digits(vector[2]) == 3)
 	{
-		printf("Error\3D Normalized Vector Of Axis Of Cylinder Should be a Number\n");
+		printf("Error\3D Normalized Vector Of Axis Of Plane Should be a Number\n");
 		freearray(xyz);
 		freearray(vector);
         freearray(rgb);
@@ -484,7 +498,7 @@ int	check_cor_sp(char **line, t_cor *cor)
 
 	if (twodsize(line) != 4)
 	{
-		printf("Error\Sphere only Takes 4 arguments\n");
+		printf("Error\nSphere only Takes 4 arguments\n");
 		return (1);
 	}
 	xyz = ft_split(line[1], ',');
@@ -498,21 +512,28 @@ int	check_cor_sp(char **line, t_cor *cor)
 	}
     if (is_all_digits(rgb[0]) == 0 || is_all_digits(rgb[1]) == 0 || is_all_digits(rgb[2]) == 0 || is_all_digits(rgb[0]) == 3 || is_all_digits(rgb[1]) == 3 || is_all_digits(rgb[2]) == 3)
 	{
-		printf("Error\nPlane RGB Should be a Number\n");
+		printf("Error\nSphere RGB Should be a Number\n");
 		freearray(rgb);
         freearray(xyz);
 		return (1);
 	}
 	if (twodsize(xyz) != 3)
 	{
-		printf("Error\nCoordinates Of The Center Of The Plane Only Takes 3 Numbers\n");
+		printf("Error\nCoordinates Of The Center Of The Sphere Only Takes 3 Numbers\n");
 		freearray(xyz);
         freearray(rgb);
 		return (1);
 	}
 	if (is_all_digits(xyz[0]) == 0 || is_all_digits(xyz[1]) == 0 || is_all_digits(xyz[2]) == 0 || is_all_digits(xyz[0]) == 3 || is_all_digits(xyz[1]) == 3 || is_all_digits(xyz[2]) == 3)
 	{
-		printf("Error\nCoordinates Of The Center Of The Cylinder Should be a Number\n");
+		printf("Error\nCoordinates Of The Center Of The Sphere Should be a Number\n");
+		freearray(xyz);
+        freearray(rgb);
+		return (1);
+	}
+	if (is_all_digits(line[2]) == 0 || is_all_digits(line[2]) == 3)
+	{
+		printf("Error\nSphere Diameter Should be a Number\n");
 		freearray(xyz);
         freearray(rgb);
 		return (1);
@@ -520,9 +541,27 @@ int	check_cor_sp(char **line, t_cor *cor)
 	cor->sp.cor[0] = string_to_float(xyz[0]); 
 	cor->sp.cor[1] = string_to_float(xyz[1]); 
 	cor->sp.cor[2] = string_to_float(xyz[2]);
+	cor->sp.diameter = string_to_float(line[2]);
 	cor->sp.rgb[0] = string_to_float(rgb[0]);
     cor->sp.rgb[1] = string_to_float(rgb[1]);
     cor->sp.rgb[2] = string_to_float(rgb[2]);
+	if (cor->sp.diameter < 0)
+	{
+		printf("Error\nSphere Diameter Should be a Positive Number\n");
+		freearray(xyz);
+        freearray(rgb);
+		return (1);
+	}
+	if (cor->sp.rgb[0] < 0 || cor->sp.rgb[1] < 0  || cor->sp.rgb[2] < 0)
+	{
+		printf("Error\nSphere RGB Should be a Positive Number\n");
+		freearray(xyz);
+        freearray(rgb);
+		return (1);
+	}
+	freearray(xyz);
+	freearray(rgb);
+	return (0);
 }
 
 int	check_cor(char **line, t_cor *cor)
