@@ -231,6 +231,45 @@ int check_cor_c(char **line , t_cor *cor)
 	return (0);
 }
 
+int check_cor_sp(char **line, t_cor *cor)
+{
+    char **xyz;
+    char **rgb;
+
+    if (twodsize(line) != 4)
+    {
+        printf("Error\nSphere should have 3 arguments\n");
+        return (1);
+    }
+    xyz = ft_split(line[1], ',');
+    if (twodsize(xyz) != 3)
+    {
+        printf("Error\nSphere center requires 3 numbers\n");
+        freearray(xyz);
+        return (1);
+    }
+    rgb = ft_split(line[3], ',');
+    if (twodsize(rgb) != 3)
+    {
+        printf("Error\nSphere RGB requires 3 numbers\n");
+        freearray(xyz);
+        freearray(rgb);
+        return (1);
+    }
+    cor->sp.cor[0] = string_to_float(xyz[0]);
+    cor->sp.cor[1] = string_to_float(xyz[1]);
+    cor->sp.cor[2] = string_to_float(xyz[2]);
+    cor->sp.diameter = string_to_float(line[2]);
+    cor->sp.rgb[0] = string_to_float(rgb[0]);
+    cor->sp.rgb[1] = string_to_float(rgb[1]);
+    cor->sp.rgb[2] = string_to_float(rgb[2]);
+
+    freearray(xyz);
+    freearray(rgb);
+    return (0);
+}
+
+
 int check_cor_l(char **line, t_cor *cor)
 {
     char **xyz;
@@ -384,24 +423,39 @@ int check_cor_cy(char **line, t_cor *cor)
 	return (0);
 }
 
-int	check_cor(char **line, t_cor *cor)
+// int	check_cor(char **line, t_cor *cor)
+// {
+// 	if (line[0][0] == 'A')
+// 		check_cor_a(line, cor);
+//     else if (line[0][0] == 'C')
+//     {
+//         check_cor_c(line, cor);
+//     }
+//     else if (line[0][0] == 'L')
+//     {
+//         check_cor_l(line, cor);
+//     }
+//     else if (line[0][0] == 'c')
+//     {
+//         check_cor_cy(line, cor);
+//     }
+// 	return (0);
+// }
+int check_cor(char **line, t_cor *cor)
 {
-	if (line[0][0] == 'A')
-		check_cor_a(line, cor);
-    else if (line[0][0] == 'C')
-    {
+    if (ft_strncmp(line[0], "A", ft_strlen(line[0])) == 0)
+        check_cor_a(line, cor);
+    else if (ft_strncmp(line[0], "C", ft_strlen(line[0])) == 0)
         check_cor_c(line, cor);
-    }
-    else if (line[0][0] == 'L')
-    {
+    else if (ft_strncmp(line[0], "L", ft_strlen(line[0])) == 0)
         check_cor_l(line, cor);
-    }
-    else if (line[0][0] == 'c')
-    {
+    else if (ft_strncmp(line[0], "cy", ft_strlen(line[0])) == 0)
         check_cor_cy(line, cor);
-    }
-	return (0);
+    else if (ft_strncmp(line[0], "sp", ft_strlen(line[0])) == 0)
+        check_cor_sp(line, cor);
+    return (0);
 }
+
 t_val   *init_val(t_val *data)
 {
     data->a = false;

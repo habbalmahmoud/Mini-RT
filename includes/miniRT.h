@@ -2,6 +2,7 @@
 #define MINIRT_H
 
 #include <stdio.h>
+#include <math.h>
 #include "../Libft/libft.h"
 #include "../GNL/get_next_line.h"
 #include "../mlx/mlx.h"
@@ -11,6 +12,20 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <math.h>
+
+# define HEIGHT 700
+# define WIDTH 1000
+
+typedef struct s_mlx
+{
+	void		*ptr;
+	void		*win_ptr;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_mlx;
 
 typedef struct s_light
 {
@@ -82,8 +97,20 @@ typedef struct s_val
 	bool	pl;
 }				t_val;
 
+
+		// VALIDATION
 char **checking_the_map(char *str);
-void minirt(char **av);
 int validate(char **map, t_cor *cor);
 
+
+		// WINDOW
+void minirt(char **av);
+void create_window(t_mlx *mlx, t_cor *cor);
+
+		// RAYTRACING HELPERS
+void	put_pixel(t_mlx *mlx, int x, int y, int color);
+float	dot_product(float v1[3], float v2[3]);
+void	normalize(float v[3]);
+int		ray_intersects_sphere(float origin[3], float dir[3], t_sp sphere, float *t);
+void	render_scene(t_mlx *mlx, t_cor *cor);
 #endif

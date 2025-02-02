@@ -1,4 +1,4 @@
-SRCS = main.c  check_the_map.c minirt.c validation.c
+SRCS = main.c  check_the_map.c minirt_mlx.c minirt.c validation.c
 
 SRCS_DIR = $(addprefix srcs/, $(SRCS))
 
@@ -11,7 +11,7 @@ LIBFT = Libft/libft.a
 GNL = GNL/gnl.a
 
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+C_FLAGS = -Wall -Wextra -Werror -lm -g #-fsanitize=address
 RM = rm -f
 
 INCLUDES = -I/usr/include -Imlx
@@ -24,7 +24,7 @@ all : $(NAME)
 		${CC} ${C_FLAGS} -c $< -o ${<:.c=.o} $(INCLUDES)
 
 $(NAME) : ${LIBFT} ${GNL} $(MLX) ${OBJS}
-		  ${CC} ${C_FLAGS} ${OBJS} ${LIBFT} $(MLX_FLAGS) ${GNL} -o ${NAME}
+		  ${CC} ${C_FLAGS} ${OBJS} ${LIBFT} $(MLX_FLAGS) ${GNL} -lm -o ${NAME}
 
 $(LIBFT) :
 		  @make -C ./Libft
